@@ -1,0 +1,8 @@
+[package]
+name = "cli-sys-info"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sysinfo = "0.33.1"
+
