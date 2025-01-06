@@ -1,4 +1,4 @@
-use sysinfo::System;
+use sysinfo::{Disks, System};
 
 fn main() {
     let mut sys = System::new_all();
@@ -6,6 +6,7 @@ fn main() {
     print_sys_info();
     print_cpu_info(&mut sys);
     print_memory_info(&mut sys);
+    print_disk_info();
 }
 
 fn print_sys_info() {
@@ -52,4 +53,22 @@ fn print_memory_info(sys: &mut System) {
     println!("Total Memory: {:.1} GB", total_memory);
     println!("Used Memory: {:.1} GB", used_memory);
     println!("Free Memory: {:.1} GB", free_memory);
+}
+
+fn print_disk_info() {
+    println!("==========================");
+    println!("Disk Information");
+    println!("==========================");
+    let disks = Disks::new_with_refreshed_list();
+    for disk in &disks {
+        let name = disk.mount_point();
+        let total_space: f64 = disk.total_space() as f64 / 1024.0 / 1024.0 / 1024.0;
+        let free_space: f64 = disk.available_space() as f64 / 1024.0 / 1024.0 / 1024.0;
+        println!(
+            "{}: {:.1} GB total, {:.1} GB free",
+            name.display(),
+            total_space,
+            free_space
+        );
+    }
 }
