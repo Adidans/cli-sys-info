@@ -1,4 +1,4 @@
-use sysinfo::{Disks, System};
+use sysinfo::{Disks, Networks, System};
 
 fn main() {
     let mut sys = System::new_all();
@@ -7,9 +7,11 @@ fn main() {
     print_cpu_info(&mut sys);
     print_memory_info(&mut sys);
     print_disk_info();
+    print_network_info();
 }
 
 fn print_sys_info() {
+    println!("\n");
     println!("==========================");
     println!("    System Information    ");
     println!("==========================");
@@ -30,8 +32,9 @@ fn print_sys_info() {
 }
 
 fn print_cpu_info(sys: &mut System) {
+    println!("\n");
     println!("==========================");
-    println!("CPU Information");
+    println!("     CPU Information      ");
     println!("==========================");
     let cpu_name = sys.cpus().first().unwrap().brand();
     println!("CPU Model: {}", cpu_name);
@@ -44,8 +47,9 @@ fn print_cpu_info(sys: &mut System) {
 }
 
 fn print_memory_info(sys: &mut System) {
+    println!("\n");
     println!("==========================");
-    println!("Memory Information");
+    println!("    Memory Information    ");
     println!("==========================");
     let total_memory: f64 = sys.total_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
     let used_memory: f64 = sys.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
@@ -56,11 +60,13 @@ fn print_memory_info(sys: &mut System) {
 }
 
 fn print_disk_info() {
+    println!("\n");
     println!("==========================");
-    println!("Disk Information");
+    println!("     Disk Information     ");
     println!("==========================");
     let disks = Disks::new_with_refreshed_list();
     for disk in &disks {
+        println!("");
         let name = disk.mount_point();
         let total_space: f64 = disk.total_space() as f64 / 1024.0 / 1024.0 / 1024.0;
         let free_space: f64 = disk.available_space() as f64 / 1024.0 / 1024.0 / 1024.0;
@@ -70,5 +76,22 @@ fn print_disk_info() {
             total_space,
             free_space
         );
+    }
+}
+
+fn print_network_info() {
+    println!("\n");
+    println!("==========================");
+    println!("   Network Information    ");
+    println!("==========================");
+    let networks = Networks::new_with_refreshed_list();
+    for (interface_name, data) in &networks {
+        println!("");
+        println!("Interface: {}", interface_name);
+        let ip_networks = data.ip_networks();
+        for ip_network in ip_networks {
+            println!("IP Network: {}", ip_network);
+        }
+        println!("MAC Address: {}", data.mac_address());
     }
 }
