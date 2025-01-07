@@ -1,13 +1,51 @@
+use clap::Parser;
 use sysinfo::{Disks, Networks, System};
 
+#[derive(Parser)]
+#[command(
+    version,
+    about = "A simple CLI tool to show system information",
+    arg_required_else_help = true
+)]
+struct Cli {
+    #[arg(short, long, help = "Show all information")]
+    all: bool,
+    #[arg(short, long, help = "Show CPU information")]
+    cpu: bool,
+    #[arg(short, long, help = "Show memory information")]
+    memory: bool,
+    #[arg(short, long, help = "Show disk information")]
+    disk: bool,
+    #[arg(short, long, help = "Show network information")]
+    network: bool,
+}
+
 fn main() {
+    let args = Cli::parse();
     let mut sys = System::new_all();
     sys.refresh_all();
-    print_sys_info();
-    print_cpu_info(&mut sys);
-    print_memory_info(&mut sys);
-    print_disk_info();
-    print_network_info();
+    if args.all {
+        print_sys_info();
+        print_cpu_info(&mut sys);
+        print_memory_info(&mut sys);
+        print_disk_info();
+        print_network_info();
+    } else {
+        match args {
+            Cli { cpu: true, .. } => print_cpu_info(&mut sys),
+            Cli { memory: true, .. } => print_memory_info(&mut sys),
+            Cli { disk: true, .. } => print_disk_info(),
+            Cli { network: true, .. } => print_network_info(),
+            _ => print_sys_info(),
+        }
+    }
+    // let mut sys = System::new_all();
+    // sys.refresh_all();
+    // print_sys_info();
+    // print_cpu_info(&mut sys);
+    // print_memory_info(&mut sys);
+    // print_disk_info();
+    // print_network_info();
 }
 
 fn print_sys_info() {
