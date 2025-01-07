@@ -29,7 +29,7 @@ fn main() {
     println!("{}", color::Fg(color::Yellow));
     println!("{}", style::Bold);
     println!("{}", figure);
-    println!("{}", style::Reset);  // Reset after title
+    println!("{}", style::Reset); // Reset after title
 
     let args = Cli::parse();
     let mut sys = System::new_all();
@@ -89,14 +89,14 @@ fn print_cpu_info(sys: &mut System) {
 
     let cpu_name = sys.cpus().first().unwrap().brand();
     println!("CPU Model: {}", cpu_name);
-    
+
     let cores = sys.physical_core_count().unwrap();
     println!("Cores: {}", cores);
-    
+
     std::thread::sleep(sysinfo::MINIMUM_CPU_UPDATE_INTERVAL);
     sys.refresh_cpu_usage();
     let usage = sys.global_cpu_usage();
-    println!("CPU Usage: {}{}", usage, "%");
+    println!("CPU Usage: {:.0}{}", usage, "%");
 }
 
 fn print_memory_info(sys: &mut System) {
@@ -110,7 +110,7 @@ fn print_memory_info(sys: &mut System) {
     let total_memory: f64 = sys.total_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
     let used_memory: f64 = sys.used_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
     let free_memory: f64 = sys.free_memory() as f64 / 1024.0 / 1024.0 / 1024.0;
-    
+
     println!("Total Memory: {:.1} GB", total_memory);
     println!("Used Memory: {:.1} GB", used_memory);
     println!("Free Memory: {:.1} GB", free_memory);
