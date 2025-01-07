@@ -1,3 +1,4 @@
+<pre>
 
  ____                           ______                 ___                      ____       __         ______
 /\  _`\                        /\__  _\              /'___\                    /\  _`\    /\ \       /\__  _\
@@ -9,6 +10,7 @@
                  /\___/
                  \/__/
 
+</pre>
 
 This is a simple CLI tool to display system information using the `sysinfo` crate.
 
