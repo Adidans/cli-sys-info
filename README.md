@@ -9,19 +9,34 @@ This is a simple CLI tool to display system information using the `sysinfo` crat
 - Display memory information
 - etc...
 
+### Prerequisites
+
+To use this tool, you need to have the following installed on your system:
+
+- Rust (latest stable version)
+- Cargo (comes with Rust)
+- Git (for cloning the repository)
+
+You can install Rust and Cargo by following the instructions on the [official Rust website](https://www.rust-lang.org/learn/get-started).
+
 ### Installation
 
 To install the CLI System Information tool, follow these steps:
 
 1. Clone the repository:
+
    ```sh
    git clone https://github.com/Adidans/cli-sys-info.git
    ```
+
 2. Navigate to the project directory:
+
    ```sh
    cd cli-sys-info
    ```
+
 3. Build the project using Cargo:
+
    ```sh
    cargo build --release
    ```
