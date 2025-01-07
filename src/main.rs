@@ -1,4 +1,5 @@
 use clap::Parser;
+use figlet_rs::FIGfont;
 use sysinfo::{Disks, Networks, System};
 
 #[derive(Parser)]
@@ -21,6 +22,10 @@ struct Cli {
 }
 
 fn main() {
+    let font = FIGfont::from_file("resources/larry3d.flf").unwrap();
+    let figure = font.convert("SysInfo CLI").unwrap();
+    println!("{}", figure);
+
     let args = Cli::parse();
     let mut sys = System::new_all();
     sys.refresh_all();

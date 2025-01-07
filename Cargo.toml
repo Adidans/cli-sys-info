@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.23", features = ["derive"] }
+figlet-rs = "0.1.5"
 sysinfo = "0.33.1"
 termion = "4.0.3"
 
